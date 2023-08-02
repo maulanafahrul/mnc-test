@@ -32,7 +32,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) (*model
 	existSession := session.Get("Username")
 	if existSession != nil {
 		return nil, &apperror.AppError{
-			ErrorCode:    1,
+			ErrorCode:    400,
 			ErrorMassage: fmt.Sprintf("You are already logged in as %v", existSession),
 		}
 	}
@@ -40,7 +40,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) (*model
 	existData := ls.userRepo.GetUserByUsername(usr.Username)
 	if existData == nil {
 		return nil, &apperror.AppError{
-			ErrorCode:    1,
+			ErrorCode:    400,
 			ErrorMassage: "Username is not registered",
 		}
 	}
@@ -48,7 +48,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) (*model
 	err := bcrypt.CompareHashAndPassword([]byte(existData.Password), []byte(usr.Password))
 	if err != nil {
 		return nil, &apperror.AppError{
-			ErrorCode:    1,
+			ErrorCode:    400,
 			ErrorMassage: "Password does not match",
 		}
 	}

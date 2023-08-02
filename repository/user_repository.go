@@ -10,7 +10,7 @@ import (
 type UserRepository interface {
 	GetUserByUsername(string) *model.UserModel
 	GetUserByUsernameForView(string) *model.UserModel
-	UpdateUser(*model.UserModel) error
+	Update(*model.UserModel) error
 	Delete(*model.UserModel) error
 	Create(*model.UserModel) error
 }
@@ -41,7 +41,7 @@ func (r *userRepositoryImpl) GetUserByUsernameForView(username string) *model.Us
 	return nil
 }
 
-func (r *userRepositoryImpl) UpdateUser(user *model.UserModel) error {
+func (r *userRepositoryImpl) Update(user *model.UserModel) error {
 	// Update the user in the slice
 	for i, usr := range r.users {
 		if usr.Id == user.Id {
