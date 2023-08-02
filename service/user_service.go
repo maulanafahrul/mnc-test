@@ -11,8 +11,10 @@ import (
 )
 
 type UserService interface {
+	GetUserByUsername(string) (*model.UserModel, error)
 	InsertUser(*model.UserModel) error
 	DeleteUser(string) error
+	UpdateUser(*model.UserModel) error
 }
 
 type userServiceImpl struct {
@@ -23,6 +25,17 @@ func NewUserService(usrRepo repository.UserRepository) UserService {
 	return &userServiceImpl{
 		usrRepo: usrRepo,
 	}
+}
+
+func (us *userServiceImpl) GetUserByUsername(username string) (*model.UserModel, error) {
+	usr := us.usrRepo.GetUserByUsernameForView(username)
+	if usr == nil {
+		return nil, &apperror.AppError{
+			ErrorCode:    400,
+			ErrorMassage: "Data not found",
+		}
+	}
+	return usr, nil
 }
 
 func (us *userServiceImpl) InsertUser(usr *model.UserModel) error {
@@ -53,6 +66,26 @@ func (us *userServiceImpl) InsertUser(usr *model.UserModel) error {
 	usr.Id = utils.UuidGenerate()
 	usr.Password = string(hashedPassword)
 	return us.usrRepo.Create(usr)
+}
+
+func (us *userServiceImpl) UpdateUser(newUser *model.UserModel) error {
+
+	existDataUsr := us.usrRepo.GetUserByUsername(newUser.Username)
+
+	if existDataUsr != nil && existDataUsr.Id != newUser.Id {
+		return &apperror.AppError{
+			ErrorCode:    1,
+			ErrorMassage: fmt.Sprintf("User data with the username %v already exists", newUser.Username),
+		}
+	}
+
+	passHash, err := bcrypt.GenerateFromPassword([]byte(newUser.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("userUsecaseImpl.GenerateFromPassword(): %w", err)
+	}
+	newUser.Password = string(passHash)
+
+	return us.usrRepo.UpdateUser(newUser)
 }
 
 func (us *userServiceImpl) DeleteUser(username string) error {

@@ -21,7 +21,7 @@ func NewLoginController(srv *gin.Engine, loginService service.LoginService) *Log
 		loginService: loginService,
 	}
 	srv.POST("/login", controller.Login)
-	srv.POST("/logout")
+	srv.POST("/logout", controller.Logout)
 
 	return controller
 }
@@ -51,7 +51,7 @@ func (lc LoginController) Login(c *gin.Context) {
 		return
 	}
 
-	err = lc.loginService.Login(loginReq, c)
+	usr, err := lc.loginService.Login(loginReq, c)
 
 	if err != nil {
 		appError := &apperror.AppError{}
@@ -71,7 +71,7 @@ func (lc LoginController) Login(c *gin.Context) {
 		}
 		return
 	}
-	tokenJwt, err := utils.GenerateToken(loginReq.Username)
+	tokenJwt, err := utils.GenerateToken(usr.Id, loginReq.Username)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"status":  false,
@@ -89,5 +89,13 @@ func (lc LoginController) Login(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"status":  true,
 		"message": tokenJwt,
+	})
+}
+
+func (lc LoginController) Logout(ctx *gin.Context) {
+	lc.loginService.Logout(ctx)
+	ctx.JSON(http.StatusOK, gin.H{
+		"status":  true,
+		"message": "Logout",
 	})
 }

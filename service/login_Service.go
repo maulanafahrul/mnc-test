@@ -12,7 +12,7 @@ import (
 )
 
 type LoginService interface {
-	Login(*model.LoginModel, *gin.Context) error
+	Login(*model.LoginModel, *gin.Context) (*model.UserModel, error)
 	Logout(*gin.Context)
 }
 
@@ -26,12 +26,12 @@ func NewLoginService(userRepo repository.UserRepository) LoginService {
 	}
 }
 
-func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) error {
+func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) (*model.UserModel, error) {
 	session := sessions.Default(c)
 	// validate session exist
 	existSession := session.Get("Username")
 	if existSession != nil {
-		return &apperror.AppError{
+		return nil, &apperror.AppError{
 			ErrorCode:    1,
 			ErrorMassage: fmt.Sprintf("You are already logged in as %v", existSession),
 		}
@@ -39,7 +39,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) error {
 
 	existData := ls.userRepo.GetUserByUsername(usr.Username)
 	if existData == nil {
-		return &apperror.AppError{
+		return nil, &apperror.AppError{
 			ErrorCode:    1,
 			ErrorMassage: "Username is not registered",
 		}
@@ -47,7 +47,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) error {
 
 	err := bcrypt.CompareHashAndPassword([]byte(existData.Password), []byte(usr.Password))
 	if err != nil {
-		return &apperror.AppError{
+		return nil, &apperror.AppError{
 			ErrorCode:    1,
 			ErrorMassage: "Password does not match",
 		}
@@ -58,7 +58,7 @@ func (ls *loginServiceImpl) Login(usr *model.LoginModel, c *gin.Context) error {
 	session.Save()
 
 	existData.Password = ""
-	return nil
+	return existData, nil
 }
 
 func (ls *loginServiceImpl) Logout(c *gin.Context) {

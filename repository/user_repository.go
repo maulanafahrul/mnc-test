@@ -8,7 +8,8 @@ import (
 )
 
 type UserRepository interface {
-	GetUserByUsername(username string) *model.UserModel
+	GetUserByUsername(string) *model.UserModel
+	GetUserByUsernameForView(string) *model.UserModel
 	UpdateUser(*model.UserModel) error
 	Delete(*model.UserModel) error
 	Create(*model.UserModel) error
@@ -19,9 +20,22 @@ type userRepositoryImpl struct {
 }
 
 func (r *userRepositoryImpl) GetUserByUsername(username string) *model.UserModel {
+
 	for _, usr := range r.users {
 		if usr.Username == username {
 			return &usr
+		}
+	}
+	return nil
+}
+func (r *userRepositoryImpl) GetUserByUsernameForView(username string) *model.UserModel {
+	for _, usr := range r.users {
+		if usr.Username == username {
+			userView := &model.UserModel{
+				Id:       usr.Id,
+				Username: usr.Username,
+			}
+			return userView
 		}
 	}
 	return nil

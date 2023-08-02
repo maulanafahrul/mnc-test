@@ -38,7 +38,7 @@ func RequireToken() gin.HandlerFunc {
 		}
 
 		// check verify token
-		token, err := utils.VerifyAccessToken(tokenString)
+		username, id, err := utils.VerifyAccessToken(tokenString)
 		if err != nil {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status":  false,
@@ -48,7 +48,7 @@ func RequireToken() gin.HandlerFunc {
 			return
 		}
 
-		if token == "" {
+		if username == "" || id == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"status":  false,
 				"message": "Unauthorize",
@@ -56,6 +56,9 @@ func RequireToken() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
+
+		c.Set("username", username)
+		c.Set("id", id)
 
 		c.Next()
 	}
