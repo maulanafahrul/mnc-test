@@ -39,13 +39,13 @@ func (us *userServiceImpl) GetUserByUsername(username string) (*model.UserModel,
 }
 
 func (us *userServiceImpl) InsertUser(usr *model.UserModel) error {
-	if len(usr.Username) <= 5 {
+	if len(usr.Username) < 5 {
 		return &apperror.AppError{
 			ErrorCode:    400,
 			ErrorMassage: "username at lease 5 character",
 		}
 	}
-	if len(usr.Password) <= 5 {
+	if len(usr.Password) < 5 {
 		return &apperror.AppError{
 			ErrorCode:    400,
 			ErrorMassage: "username at lease 5 character",
@@ -69,13 +69,13 @@ func (us *userServiceImpl) InsertUser(usr *model.UserModel) error {
 }
 
 func (us *userServiceImpl) UpdateUser(newUser *model.UserModel) error {
-	if len(newUser.Username) <= 5 {
+	if len(newUser.Username) < 5 {
 		return &apperror.AppError{
 			ErrorCode:    400,
 			ErrorMassage: "username at lease 5 character",
 		}
 	}
-	if len(newUser.Password) <= 5 {
+	if len(newUser.Password) < 5 {
 		return &apperror.AppError{
 			ErrorCode:    400,
 			ErrorMassage: "username at lease 5 character",

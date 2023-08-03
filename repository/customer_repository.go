@@ -9,6 +9,7 @@ import (
 
 type CustomerRepository interface {
 	GetCustomerByFullname(string) *model.CustomerModel
+	GetCustomerByUsername(string) *model.CustomerModel
 	Create(*model.CustomerModel) error
 	Update(*model.CustomerModel) error
 	Delete(*model.CustomerModel) error
@@ -22,6 +23,15 @@ func (r *customerRepositoryImpl) GetCustomerByFullname(fullname string) *model.C
 
 	for _, cus := range r.customers {
 		if cus.Fullname == fullname {
+			return &cus
+		}
+	}
+	return nil
+}
+func (r *customerRepositoryImpl) GetCustomerByUsername(username string) *model.CustomerModel {
+
+	for _, cus := range r.customers {
+		if cus.Username == username {
 			return &cus
 		}
 	}

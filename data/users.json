@@ -1,12 +1,1 @@
-[
-    {
-        "id": "69b548c6-e25d-4f11-bbdd-32f69c622a4e",
-        "username": "user1",
-        "password": "$2a$10$6PdIVShqwcrf3ikZ.BtJQO5ZbyHBFElE8JnPXqRAkc13EEo70CGES"
-    },
-    {
-        "id": "ecb73267-77f8-46d3-880a-3a67673398f2",
-        "username": "ueee",
-        "password": "$2a$10$kOb7u1xQ4Y94t6MF3sFui.IZb58g2xy.SfRy1Hf8/F47nJgobRyGW"
-    }
-]
+[{"id":"69b548c6-e25d-4f11-bbdd-32f69c622a4e","username":"user1","password":"$2a$10$6PdIVShqwcrf3ikZ.BtJQO5ZbyHBFElE8JnPXqRAkc13EEo70CGES"},{"id":"ecb73267-77f8-46d3-880a-3a67673398f2","username":"ueee","password":"$2a$10$kOb7u1xQ4Y94t6MF3sFui.IZb58g2xy.SfRy1Hf8/F47nJgobRyGW"},{"id":"508e9497-d294-4369-bbc0-0688553362fa","username":"user51","password":"$2a$10$StCwRU/HN2111OcobzapD.jzQD9MD3S9WZ10KiiH/KkxF4bTZu9aS"},{"id":"3c26e1a9-74d1-4e11-968f-c9b1ea99c33d","username":"user99","password":"$2a$10$1SxFmuIKvOkpNnrgSg4I8.ttLkXUBiPfVGMU0fl7ZxBcnxbPWE4tu"}]

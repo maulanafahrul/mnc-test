@@ -164,6 +164,9 @@ func (cc CustomerController) UpdateCustomer(c *gin.Context) {
 		return
 	}
 
+	username, _ := c.Get("username")
+	usernameStr := username.(string)
+	Newcust.Username = usernameStr
 	id, _ := c.Get("id")
 	customerId := id.(string)
 	Newcust.Id = customerId
