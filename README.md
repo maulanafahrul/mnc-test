@@ -8,20 +8,35 @@ Proyek ini adalah contoh implementasi manajemen data menggunakan framework web G
 
 2. Clone repositori ini:
    (https://github.com/maulanafahrul/mnc-test.git)
-Penggunaan
-Autentikasi
+   
+## Penggunaan
+
+### Autentikasi
+
 Proyek ini mendukung autentikasi dengan endpoint /login untuk masuk dan /logout untuk keluar. Setelah masuk, Anda akan mendapatkan token JWT yang digunakan untuk mengakses endpoint lainnya.
 
-Manajemen Pengguna
+## Manajemen Pengguna
+
 GET /user/:username: Mendapatkan informasi pengguna berdasarkan nama pengguna.
+
 POST /user: Menambahkan pengguna baru.
+
 PUT /user: Mengupdate informasi pengguna.
+
 DELETE /user/:username: Menghapus pengguna berdasarkan nama pengguna.
-Manajemen Pelanggan
+
+## Manajemen Pelanggan
+
 GET /customer/:fullname: Mendapatkan informasi pelanggan berdasarkan nama lengkap.
+
 POST /customer: Menambahkan pelanggan baru.
+
 PUT /customer: Mengupdate informasi pelanggan.
+
 DELETE /customer/:fullname: Menghapus pelanggan berdasarkan nama lengkap.
-Manajemen Pembayaran
+
+## Manajemen Pembayaran
+
 GET /payment/:id: Mendapatkan informasi pembayaran berdasarkan ID.
+
 POST /payment: Menambahkan pembayaran baru.
