@@ -29,7 +29,7 @@ func NewCustomerController(srv *gin.Engine, customerService service.CustomerServ
 
 func (cc CustomerController) GetCustomerByFullname(c *gin.Context) {
 	fullname := c.Param("fullname")
-	usr, err := cc.customerService.GetCustomerByFullname(fullname)
+	cust, err := cc.customerService.GetCustomerByFullname(fullname)
 	if err != nil {
 		appError := &apperror.AppError{}
 		if errors.As(err, &appError) {
@@ -49,7 +49,7 @@ func (cc CustomerController) GetCustomerByFullname(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"success": true,
-		"data":    usr,
+		"data":    cust,
 	})
 }
 

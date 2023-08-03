@@ -10,6 +10,7 @@ type ServiceManager interface {
 	GetUserService() service.UserService
 	GetLoginService() service.LoginService
 	GetCustomerService() service.CustomerService
+	GetPaymentService() service.PaymentService
 }
 
 type serviceManager struct {
@@ -17,6 +18,7 @@ type serviceManager struct {
 
 	usrService   service.UserService
 	custService  service.CustomerService
+	payService   service.PaymentService
 	loginService service.LoginService
 }
 
@@ -28,6 +30,7 @@ func NewServiceManager(repoManager RepositoryManager) ServiceManager {
 
 var onceLoadUserService sync.Once
 var onceLoadCustomerService sync.Once
+var onceLoadPaymentService sync.Once
 var onceLoadLoginService sync.Once
 
 func (sm *serviceManager) GetUserService() service.UserService {
@@ -41,6 +44,12 @@ func (sm *serviceManager) GetCustomerService() service.CustomerService {
 		sm.custService = service.NewCustomerService(sm.repoManager.GetCustomerRepo())
 	})
 	return sm.custService
+}
+func (sm *serviceManager) GetPaymentService() service.PaymentService {
+	onceLoadPaymentService.Do(func() {
+		sm.payService = service.NewPaymentService(sm.repoManager.GetPaymentRepo(), sm.repoManager.GetCustomerRepo())
+	})
+	return sm.payService
 }
 func (sm *serviceManager) GetLoginService() service.LoginService {
 	onceLoadLoginService.Do(func() {

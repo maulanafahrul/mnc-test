@@ -1,0 +1,24 @@
+[
+    {
+        "id": "dsad",
+        "customer_id": "dasdsadada",
+        "customer_name": "asdasdas",
+        "account_number_customer": "asdasdasda",
+        "amount": 32232332,
+        "merchant_id": "dadadad",
+        "merchant_name": "dsfdsfsfds",
+        "account_number_merchant": "wrwrwerw",
+        "date": "2012-21-21"
+    },
+    {
+        "id": "0f53cbf1-4036-45fc-bb62-cbef6cc0b540",
+        "customer_id": "1",
+        "customer_name": "adasdas",
+        "account_number_customer": "353535353535335",
+        "amount": 3535353,
+        "merchant_id": "69b548c6-e25d-4f11-bbdd-32f69c622a4e",
+        "merchant_name": "test23",
+        "account_number_merchant": "322323223232345",
+        "date": "2023-08-04"
+    }
+]

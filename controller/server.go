@@ -31,6 +31,7 @@ func (s *server) Run() {
 func (s *server) initController() {
 	NewUserConroller(s.srv, s.serviceManager.GetUserService())
 	NewCustomerController(s.srv, s.serviceManager.GetCustomerService())
+	NewPaymentController(s.srv, s.serviceManager.GetPaymentService())
 	NewLoginController(s.srv, s.serviceManager.GetLoginService())
 }
 
